@@ -26,6 +26,8 @@ app.post('/todos',(req,res)=>{ //post means sending the data
   })
 })
 
+module.exports = {app}
+
 app.listen(3000,()=>{
   console.log("Listening ...")
 })
