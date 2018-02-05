@@ -26,6 +26,17 @@ app.post('/todos',(req,res)=>{ //post means sending the data
   })
 })
 
+app.get('/todos' , (req, res)=> {
+  Todo.find().then((todos)=>{
+    res.send({
+      todotext: todos
+    }) //this is actually an array but we put in an object so that if we want we can add on some more code in the object in the future.
+  }, (e)=>{
+    res.status(400).send(e)
+  })
+})
+
+
 module.exports = {app}
 
 app.listen(3000,()=>{
