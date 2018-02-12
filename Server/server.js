@@ -11,6 +11,7 @@ const {User} = require('./models/users.js')
 
 
 var app = express()
+const port = process.env.PORT || 3000
 
 app.use(bodyParser.json()) //middleware
 
@@ -60,5 +61,5 @@ app.get('/todos/:id' , (req,res)=>{
 module.exports = {app}
 
 app.listen(3000,()=>{
-  console.log("Listening ...")
+  console.log(`Listening on Port ${port}`)
 })
