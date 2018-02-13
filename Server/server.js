@@ -35,7 +35,7 @@ app.get('/todos' , (req, res)=> {
     res.send({
        content : todos
     })//todos is actually an array but we put in an object so that if we want we can add on some more code in the object in the future.
-  }, (e)=>{
+  }).catch((e)=>{
     res.status(400).send(e)
   })
   console.log(res.body)
