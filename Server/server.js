@@ -49,12 +49,31 @@ app.get('/todos/:id' , (req,res)=>{
   }
   Todo.findById(id).then((todo)=>{
     if(!todo){
-      res.status(404).send()
+       return res.status(404).send()
     }
     res.send({note:todo})
-  },(e)=>{
+  }).catch((e)=>{
     res.status(400).send()
   })
+})
+
+app.delete('/todos/:id' , (req,res)=>{
+  var id = req.params.id //this is where our url parameters are stored. because we have id setup in url, we can get it from here.
+
+  if(!ObjectID.isValid(id)) {
+    return res.status(404).send()
+  }
+
+  Todo.findByIdAndRemove(id).then((todo)=>{
+    if(!todo){
+        return res.status(404).send()
+    }
+    res.send({todo})
+
+  }).catch((e)=>{
+      res.status(400).send()
+  })
+
 })
 
 
