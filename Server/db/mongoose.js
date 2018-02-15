@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const LOCAL_MONGO = 'mongodb://localhost:27017/ToDoApp'
-const mLAB_MONGO = 'mongodb://<dbuser>:<dbpassword>@ds229388.mlab.com:29388/todoapi'
+const mLAB_MONGO = 'mongodb://varsha_todo:varsha_todo@ds229388.mlab.com:29388/todoapi'
 
 mongoose.Promise = global.Promise
 
