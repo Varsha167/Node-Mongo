@@ -5,7 +5,9 @@ const mLAB_MONGO = 'mongodb://varsha_todo:varsha_todo@ds229388.mlab.com:29388/to
 
 mongoose.Promise = global.Promise
 
-mongoose.connect(process.env.PORT? mLAB_MONGO : LOCAL_MONGO)
+//mongoose.connect(process.env.PORT? mLAB_MONGO : LOCAL_MONGO)
+
+mongoose.connect( process.env.MONGODB_URI );
 
 module.exports = {
   mongoose: mongoose
