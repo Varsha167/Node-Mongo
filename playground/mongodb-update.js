@@ -18,21 +18,21 @@ MongoClient.connect('mongodb://localhost:27017/ToDoApp', (err,db)=>{
 //return ke baad processing stops. So either use return in if or use else.
    console.log("Connected to the DB server")
 
-//    db.collection('Todos').findOneAndUpdate({
-//      _id: new ObjectID("5a71bd803cae9021584aeb7a")
-//    },
-//  {
-//    $set: {
-//    completed: true
-//   }
-// },{
-//   returnOriginal: false
-// },(result,err)=>{
-//   if(result){
-//     return console.log(result)
-//   }
-//   console.log("error",err)
-// })
+   db.collection('Todos').findOneAndUpdate({
+     _id: new ObjectID("5a71bd803cae9021584aeb7a")
+   },
+ {
+   $set: {
+   completed: true
+  }
+},{
+  returnOriginal: false
+},(result,err)=>{
+  if(result){
+    return console.log(result)
+  }
+  console.log("error",err)
+})
 
 
 db.collection('Users').findOneAndUpdate({

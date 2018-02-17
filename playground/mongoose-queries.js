@@ -6,7 +6,7 @@ const{User}= require('./../Server/models/users')
 
 //var id = '5a7a8dd0fe011f2b8430718c11'
 
-var id = '6a743e435589e21934e537e7'
+var id = '5a743e435589e21934e537e7'
 
 User.findById(id).then((user)=>{
   if(!user){

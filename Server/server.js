@@ -19,8 +19,8 @@ const port = process.env.PORT
 app.use(bodyParser.json()) //middleware
 
 app.post('/todos',(req,res)=>{ //post means sending the data
-  console.log("body below")
-  console.log(req.body) //we use body parser to see this (from Colt)
+  //console.log("body below")
+  //console.log(req.body) //we use body parser to see this (from Colt)
   var todo = new Todo({
     text: req.body.text
   })
@@ -106,6 +106,36 @@ app.patch('/todos/:id' , (req,res)=>{
   })
 
 })
+
+app.post('/users' , (req,res)=>{
+  //var userbody = _.pick(req.body, ['email' , 'password']) //2 arguments --(req.body) --object that we want to pick from, and 2nd arg is an array of what we want to pick
+  //console.log(req.body)
+  var newUser = new User ({ //new instance of the User model
+    email: req.body.email,
+    password: req.body.password
+  })
+
+  newUser.save().then(()=>{
+    return newUser.generateAuthToken()
+    //res.send(user)
+  }).then((token)=>{
+    res.header('x-auth' , token).send(newUser)
+  }).catch((e)=>{
+    res.status(400).send(e)
+  })
+})
+
+// app.post('/users', (req, res) => {
+//   var body = _.pick(req.body, ['email', 'password']);
+//   var user = new User(body);
+//
+//   user.save().then((user) => {
+//     res.send(user);
+//   }).catch((e) => {
+//     res.status(400).send(e);
+//   })
+// });
+
 
 
 module.exports = {app}

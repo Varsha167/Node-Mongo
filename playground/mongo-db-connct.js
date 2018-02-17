@@ -18,16 +18,16 @@ MongoClient.connect('mongodb://localhost:27017/ToDoApp', (err,db)=>{
 //return ke baad processing stops. So either use return in if or use else.
    console.log("Connected to the DB server")
 
-   // db.collection('Todos').insertOne({
-   //   text: "Something else to do",
-   //   completed: false
-   // },(err,result)=>{
-   //   if(err){
-   //     return console.log("Unable to add the document", err)
-   //   }
-   //  // console.log(JSON.stringify(result.ops,undefined,2))
-   //  console.log(result.ops)
-   // })
+   db.collection('TodosPr').insertOne({
+     text: "Something else to do",
+     completed: false
+   },(err,result)=>{
+     if(err){
+       return console.log("Unable to add the document", err)
+     }
+    // console.log(JSON.stringify(result.ops,undefined,2))
+    console.log(result.ops)
+   })
 
    //
    // db.collection('Users').insertOne({
