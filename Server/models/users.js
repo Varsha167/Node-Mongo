@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require ('validator')
 const jwt = require('jsonwebtoken')
 const _ = require('lodash')
+const bcrypt = require('bcryptjs')
 
 //This is what we need to tack on custom methods. Can't do that with only the models
 var UserSchema = new mongoose.Schema({
@@ -41,14 +42,14 @@ var UserSchema = new mongoose.Schema({
 })
 
 //Overidding generateAuthToken method
-UserSchema.methods.toJSON = function() {
+UserSchema.methods.toJSON = function() { //this is an instance method. Instance methods get called with individual documents.
   var user = this
   var userObject = user.toObject()
 
 return _.pick(userObject , ['_id' , 'email'])
 }
 
-//using ES5 system of writing function because we need to nind "this"
+//using ES5 system of writing function because we need to bind "this"
 UserSchema.methods.generateAuthToken = function() {
   var user = this
   var access = 'auth'
@@ -76,6 +77,38 @@ UserSchema.methods.generateAuthToken = function() {
   //////////////////////////
 }
 
+UserSchema.statics.findByToken = function (token)  {
+  var User = this
+  var decoded
+
+  try{
+  decoded = jwt.verify(token , 'abc123')
+} catch (e) {
+    return new Promise((resolve,reject)=>{
+      reject()
+    } )
+  }
+
+  return User.findOne({
+    _id : decoded._id,
+    'tokens.token' : token, //parameter wala token
+    'tokens.access' : 'auth'
+  })
+}
+
+UserSchema.pre('save' , function(next){
+  var user = this
+  if (user.isModified('password')) {
+    bcrypt.genSalt(10, (err,salt)=>{
+      bcrypt.hash (user.password, salt, (err, hash)=>{
+        user.password = hash
+        next()
+      })
+    })
+  } else {
+    next()
+  }
+})
 
 var User = mongoose.model('User',UserSchema)
 
