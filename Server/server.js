@@ -142,7 +142,18 @@ app.get('/users/me' , authenticate,(req,res)=>{
 //   })
 })
 
+app.post('/users/login' ,(req,res)=>{
+  var body = _.pick(req.body, ['email','password'])
 
+  User.findByCredentials(body.email, body.password).then((user)=>{
+  return User.generateAuthToken().then((token)=>{ //for security reasons we create a new token everytime. Can also just use res.send(user)
+    res.header('x-auth', token).send(user)
+  })
+  }).catch((e)=>{
+    res.status(400).send()
+  })
+   //res.send(body)
+})
 
 module.exports = {app}
 
