@@ -115,12 +115,11 @@ app.post('/users' , (req,res)=>{
     email: req.body.email,
     password: req.body.password
   })
-
   newUser.save().then(()=>{
     return newUser.generateAuthToken()
     //res.send(user)
   }).then((token)=>{
-    res.header('x-auth' , token).send(newUser)
+    res.header('x-auth', token).send(newUser)
   }).catch((e)=>{
     res.status(400).send(e)
   })
@@ -142,17 +141,6 @@ app.get('/users/me' , authenticate,(req,res)=>{
 //     res.status(401).send()
 //   })
 })
-
-// app.post('/users', (req, res) => {
-//   var body = _.pick(req.body, ['email', 'password']);
-//   var user = new User(body);
-//
-//   user.save().then((user) => {
-//     res.send(user);
-//   }).catch((e) => {
-//     res.status(400).send(e);
-//   })
-// });
 
 
 
